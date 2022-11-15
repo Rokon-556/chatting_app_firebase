@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "562732141388",
+    "firebase_url": "https://rokon-556-default-rtdb.firebaseio.com",
+    "project_id": "rokon-556",
+    "storage_bucket": "rokon-556.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:562732141388:android:76876386fd8599ef741de9",
+        "android_client_info": {
+          "package_name": "com.example.chatting_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "562732141388-j79tar10iu5t5alb9ucig9dihibkha3a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBikOFR0DVkigeh0wl64-7FsYa_vbok9M4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "562732141388-j79tar10iu5t5alb9ucig9dihibkha3a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
