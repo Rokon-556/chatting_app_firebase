@@ -1,6 +1,14 @@
-import 'package:flutter/material.dart';
+import 'dart:io';
 
-import '../widgets/authentication/auth_form.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+ 
+
+
+import '../widgets/auth/auth_form.dart';
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});
@@ -10,16 +18,74 @@ class AuthScreen extends StatefulWidget {
 }
 
 class _AuthScreenState extends State<AuthScreen> {
+  final _auth = FirebaseAuth.instance;
+  bool _isLoading=false;
+  String _imageUrl='';
 
-void _submitAuthForm(
-  String email,String password,String username, bool  isLogin,
-){}
+  void _submitAuthForm(
+    String email,
+    String password,
+    String username,
+    bool isLogin,
+    XFile image,
+    //BuildContext ctx,
+  ) async {
+    UserCredential authResult;
+    try {
+      setState(() {
+        _isLoading=true;
+      });
+      if (isLogin) {
+        authResult = await _auth.signInWithEmailAndPassword(
+          email: email,
+          password: password,
+        );
+      } else {
+        authResult = await _auth.createUserWithEmailAndPassword(
+          email: email,
+          password: password,
+        );
+        final ref= FirebaseStorage.instance.ref().child('user_image').child(authResult.user!.uid + '.jpg');
+       await ref.putFile(File(image.path));
+       final url=ref.getDownloadURL();
+       //_imageUrl=await ref;
+      
+
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(authResult.user!.uid)
+            .set({'username': username, 'email': email,'image_url':url});
+      }
+    } on FirebaseAuthException catch (err) {
+      var message = 'An error occurred,please check your credential';
+
+      if (err.message != null) {
+        message = err.message!;
+      }
+
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(message),
+        backgroundColor: Theme.of(context).errorColor,
+      ));
+      setState(() {
+        _isLoading=false;
+      });
+    } catch (err) {
+      print(err);
+      setState(() {
+        _isLoading=false;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
-      body: AuthForm(submitFn: _submitAuthForm,),
+      body: AuthForm(
+        submitFn: _submitAuthForm,
+        isLoading:_isLoading,
+      ),
     );
   }
 }
