@@ -76,12 +76,12 @@ void _initNotifications() async {
                 DropdownMenuItem(
                   child: Container(
                     child: Row(
-                      children: [
-                        const Icon(Icons.exit_to_app,color: Colors.black,),
-                        const SizedBox(
+                      children: const [
+                         Icon(Icons.exit_to_app,color: Colors.black,),
+                         SizedBox(
                           width: 8,
                         ),
-                        const Text('Logout'),
+                        Text('Logout'),
                       ],
                     ),
                   ),
@@ -97,7 +97,7 @@ void _initNotifications() async {
       ),
       body: Container(
         child: Column(
-          children: [
+          children: const [
             Expanded(
               child: Messages(),
             ),

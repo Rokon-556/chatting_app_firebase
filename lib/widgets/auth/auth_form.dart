@@ -1,4 +1,4 @@
-import 'dart:io';
+
 
 import 'package:chatting_app/widgets/pickers/user_image_picker.dart';
 import 'package:flutter/material.dart';
@@ -37,7 +37,7 @@ class _AuthFormState extends State<AuthForm> {
     FocusScope.of(context).unfocus();
     if (_userImageFile == null && !_isLogin) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text('Please Pick An Image'),
+        content: const Text('Please Pick An Image'),
         backgroundColor: Theme.of(context).errorColor,
       ));
     }
@@ -65,6 +65,9 @@ class _AuthFormState extends State<AuthForm> {
                   TextFormField(
                     key: const ValueKey('email'),
                     keyboardType: TextInputType.emailAddress,
+                    autocorrect: false,
+                    textCapitalization: TextCapitalization.none,
+                    enableSuggestions: false,
                     decoration:
                         const InputDecoration(labelText: 'Email Address'),
                     validator: ((value) {
@@ -80,6 +83,9 @@ class _AuthFormState extends State<AuthForm> {
                   if (!_isLogin)
                     TextFormField(
                       key: const ValueKey('name'),
+                      autocorrect: true,
+                    textCapitalization: TextCapitalization.words,
+                    enableSuggestions: false,
                       decoration: const InputDecoration(labelText: 'User Name'),
                       validator: ((value) {
                         if (value!.isEmpty || value.length < 4) {

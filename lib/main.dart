@@ -1,5 +1,6 @@
 import 'package:chatting_app/screens/auth_screen.dart';
 import 'package:chatting_app/screens/chat_screen.dart';
+import 'package:chatting_app/screens/splash_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -46,6 +47,9 @@ class MyApp extends StatelessWidget {
             .copyWith(secondary: Colors.deepPurple),
       ),
       home: StreamBuilder(builder:(context,userSnapShot){
+        if(userSnapShot.connectionState==ConnectionState.waiting){
+          return const SplashScreen();
+        }
         if(userSnapShot.hasData){
           return const ChatScreen();
         }else{
